@@ -8,8 +8,9 @@ public interface IRepository<T> where T : BaseEntity
     T? FindById(Guid Id);
     IList<T> FindBy(Expression<Func<T, bool>> predicate);
     IList<T> FindAll();
-    T Save(T objectToSave);
+    void Save(T objectToSave);
     void Delete(Guid Id);
-    
-    
+    void Update(T prod);
+
+
 }

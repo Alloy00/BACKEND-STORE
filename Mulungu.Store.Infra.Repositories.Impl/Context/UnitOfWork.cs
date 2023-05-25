@@ -6,14 +6,32 @@ namespace Mulungu.Loja.Infra.Repositories.Impl.Context;
 
 public class UnitOfWork : IUnitOfWork
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly DbContext _dbContext;
-
-    //private IProductRepository _productRepository = new ProductRepository(_dbContext);
+    private IUnitOfWork _unitOfWork;
+    private IProductRepository _productRepository;
+    private StoreDbContext _dbContext;
     
-    public IProductRepository ProductRepository { get ; }
-    public void Commit()
+    public UnitOfWork(DbContextOptions<StoreDbContext> options)
     {
+        _dbContext = new StoreDbContext(options);
+        
+    }
+    /*private readonly DbContext _dbContext;
+
+    public UnitOfWork(DbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }*/
+    // Testar remover readonly e instanciar diferentemente
+    
+
+    /*public IProductRepository ProductRepository => 
+        _productRepository ?? (_productRepository = new ProductRepository(_dbContext));*/
+    public void SaveChanges()
+    {
+        /*using (var db = new StoreDbContext())
+        {
+            db.SaveChanges();
+        }*/
         _dbContext.SaveChanges();
     }
 }

@@ -32,26 +32,17 @@ public abstract class Repository<T> : IRepository<T> where T : BaseEntity
         return _dbSet.ToList();
     }
 
-    public T Save(T objectToSave)
+    public void Save(T prod)
     {
-        /*var entity = _dbSet.Attach(objectToSave).Entity;
-        if (entity != null)
-        {
-            _dbContext.Entry(entity).State = EntityState.Added;
-        }
-        try
-        {
-            _dbContext.SaveChanges();
-        }
-        catch (Exception ex)
-        {
-            // Log the exception or handle it appropriately
-            Console.WriteLine(ex.Message);
-        }*/
-        _dbSet.Attach(objectToSave);
-        return objectToSave;
-        //return _dbSet.Attach(objectToSave).Entity;
-        // Inserir save aqui (não tenho certeza onde)
+        _dbSet.Add(prod);
+        
+    }
+
+    public void Update(T prod)
+    {
+        _dbSet.Attach(prod);
+        _dbContext.Entry(prod).State = EntityState.Modified;
+        _dbContext.SaveChanges();
     }
 
     public void Delete(Guid Id)
@@ -61,6 +52,5 @@ public abstract class Repository<T> : IRepository<T> where T : BaseEntity
         {
             _dbSet.Attach(entity).State = EntityState.Deleted;
         }
-        _dbContext.SaveChanges();
     }
 }

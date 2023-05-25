@@ -2,7 +2,6 @@
 
 public interface IUnitOfWork
 {
-    IProductRepository ProductRepository { get; }
-
-    void Commit();
+    //IProductRepository ProductRepository { get; }
+    void SaveChanges();
 }
